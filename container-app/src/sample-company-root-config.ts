@@ -1,17 +1,19 @@
 import { registerApplication, start } from "single-spa";
+import { constructApplications, constructRoutes, constructLayoutEngine } from "single-spa-layout";
 
-registerApplication({
-  name: "@sample-company/navbar",
-  app: () => System.import("@sample-company/navbar"),
-  activeWhen: ["/"],
+const routes = constructRoutes(document.querySelector("#single-spa-layout"));
+
+const applications = constructApplications({
+  routes,
+  loadApp({ name }) {
+    return System.import(name);
+  },
 });
+const layoutEngine = constructLayoutEngine({ routes, applications, active: false });
+applications.forEach(registerApplication);
 
-registerApplication({
-  name: "@sample-company/sample-module",
-  app: () => System.import("@sample-company/sample-module"),
-  activeWhen: ["/"],
-});
-
-start({
-  urlRerouteOnly: true,
+System.import("@sample-company/stylelib").then(() => {
+  // Activate the layout engine once the styleguide CSS is loaded
+  layoutEngine.activate();
+  start();
 });
