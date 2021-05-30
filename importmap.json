@@ -1,8 +1,0 @@
-{
-      "imports": {      
-        "@sample-company/root-config": "//localhost:9000/sample-company-root-config.js",
-        "@sample-company/stylelib": "//localhost:9002/sample-company-stylelib.js",
-        "@sample-company/navbar": "//localhost:9001/sample-company-navbar.js",
-        "@sample-company/sample-module": "//localhost:9003/sample-company-sample-module.js"
-      }
-}
