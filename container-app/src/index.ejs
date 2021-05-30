@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sample Company</title>
-  <!-- Bootstrap core CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
   <!--
     Remove this if you only support browsers that support async/await.
     This is needed by babel to share largeish helper code for compiling async/await in older
@@ -36,7 +34,9 @@
       "imports": {
         "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
         "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.development.js",
-        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.development.js"
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.development.js",
+        "react-is": "https://unpkg.com/react-is@17.0.1/umd/react-is.production.min.js",	
+        "styled-components": "https://unpkg.com/styled-components@5.2.1/dist/styled-components.min.js" 
       }
     }
   </script>
@@ -74,16 +74,20 @@
   <% } %>
 </head>
 <body>
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-   <div id="single-spa-application:@sample-company/navbar"></div> 
-  <main>
-    <h1>Container App main</h1>
-    <div id="single-spa-application:@sample-company/sample-module"></div> 
-  </main>
-</div>
+<template id="single-spa-layout">
+  <single-spa-router>
+    <nav>
+      <application name="@sample-company/navbar"></application>
+    </nav>
+    <main>
+      <route default>
+        <application name="@sample-company/sample-module"></application>
+      </route>
+    </main>
+  </single-spa-router>
+</template>
   <script>
     System.import('@sample-company/root-config');
-    System.import('@sample-company/stylelib');
   </script>
   <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
 </body>
